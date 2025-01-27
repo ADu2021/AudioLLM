@@ -49,8 +49,8 @@ DROPOUT = 0.1 # Default 0.1
 NUM_HEADS = 8 
 NUM_LAYERS = 6
 SRC_MASK_TYPE = "causal" # none or causal
-TGT_MASK_TYPE = "lookbehind-1" #"independent" or causal or lookbehind-x
-MEMORY_MASK_TYPE = "lookbehind-1" # independent or causal or lookbehind-x
+TGT_MASK_TYPE = "independent" #"independent" or causal or lookbehind-x
+MEMORY_MASK_TYPE = "independent" # independent or causal or lookbehind-x
 
 USE_CANINE = True
 CANINE_REDUCE = "sum"
@@ -58,7 +58,7 @@ CANINE_REDUCE = "sum"
 ENCODER_TYPE = "llama3"
 assert ENCODER_TYPE in ["llama3", "llama3_embed", "qwen2audio"]
 
-UNIT_EMBED_PATH = "/afs/cs.stanford.edu/u/duyy/.cache/fairseq2/assets/aa367aa51efaa58032e42d54/kmeans_10k.npy"
+UNIT_EMBED_PATH = "/afs/cs.stanford.edu/u/duyy/.cache/fairseq2/assets/aa367aa51efaa58032e42d54/kmeans_10k.npy" # download from https://dl.fbaipublicfiles.com/seamlessM4T/models/unit_extraction/kmeans_10k.npy
 if UNIT_EMBED_PATH is not None:
     assert EMBED_DIM == 1280
 
@@ -275,7 +275,7 @@ class LlamaDecoder(nn.Module):
             assert self.canine_reduce in ["mean", "sum"]
             config = AutoConfig.from_pretrained("google/canine-c")
             embed = CanineEmbeddings(config)
-            ckpt_path = "/afs/cs.stanford.edu/u/duyy/data/downloads/canine-c/canine_embedding.bin"
+            ckpt_path = "/afs/cs.stanford.edu/u/duyy/data/downloads/canine-c/canine_embedding.bin" # download from https://huggingface.co/google/canine-c/blob/main/pytorch_model.bin
             state_dict = torch.load(ckpt_path)
             embed.load_state_dict(state_dict)
 
@@ -364,7 +364,7 @@ class Qwen2Audio(nn.Module):
             assert self.canine_reduce in ["mean", "sum"]
             config = AutoConfig.from_pretrained("google/canine-c")
             embed = CanineEmbeddings(config)
-            ckpt_path = "/afs/cs.stanford.edu/u/duyy/data/downloads/canine-c/canine_embedding.bin"
+            ckpt_path = "/afs/cs.stanford.edu/u/duyy/data/downloads/canine-c/canine_embedding.bin" # download from https://huggingface.co/google/canine-c/blob/main/pytorch_model.bin
             state_dict = torch.load(ckpt_path)
             embed.load_state_dict(state_dict)
 
